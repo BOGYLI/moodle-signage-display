@@ -17,5 +17,5 @@ with open("template.html", "r") as tf:
 slidesdiv = soup.find(attrs={"class": "slides"})
 slidesdiv.append(slides_html)
 
-with open("html/index.html", "w") as pf:
+with open("html/index.html", "w", encoding="utf-8") as pf:
     pf.write(soup.prettify(formatter=None))

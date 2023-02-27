@@ -45,7 +45,7 @@ class PresentationParser:
                 continue
             
             html += "<section"
-            if len(slide["background"]) > 0:
+            if "background" in slide.keys():
                 html += " data-background=\""+slide["background"]+"\""
             
             html += ">"

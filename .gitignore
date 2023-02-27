@@ -1,5 +1,6 @@
 .git
 .conda
+.venv
 config.py
 __pycache__
 .vscode
