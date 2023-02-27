@@ -17,6 +17,7 @@ class PresentationParser:
             if content["fieldid"] == fields["Slide"]: slide["html"] = content["content"]
             if content["fieldid"] == fields["Anzeige Start"]: slide["start"] = content["content"]
             if content["fieldid"] == fields["Anzeige Ende"]: slide["end"] = content["content"]
+            if content["fieldid"] == fields["Anzeigedauer"]: slide["duration"] = content["content"]
             if content["fieldid"] == fields["Priorität"]: slide["priority"] = content["content"]
             if content["fieldid"] == fields["Hintergrundbild"]:
                 imgname = content["content"]
@@ -47,6 +48,8 @@ class PresentationParser:
             html += "<section"
             if "background" in slide.keys():
                 html += " data-background=\""+slide["background"]+"\""
+            if "duration" in slide.keys():
+                html += " data-autoslide=\""+str(int(slide["duration"])*1000)+"\""
             
             html += ">"
             html += slide["html"]
