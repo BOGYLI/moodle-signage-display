@@ -15,14 +15,18 @@ class PresentationParser:
         slide = dict()
         for content in dbentry["contents"]:
             if content["fieldid"] == fields["Slide"]: slide["html"] = content["content"]
+            if "@PLUGINFILE@" in slide["html"]:
+                for f in content["files"]:
+                    self.mws.download_file(f["filename"], f["fileurl"])
+                slide["html"] = slide["html"].replace("@@PLUGINFILE@@", "media")
             if content["fieldid"] == fields["Anzeige Start"]: slide["start"] = content["content"]
             if content["fieldid"] == fields["Anzeige Ende"]: slide["end"] = content["content"]
             if content["fieldid"] == fields["Anzeigedauer"]: slide["duration"] = content["content"]
             if content["fieldid"] == fields["Priorität"]: slide["priority"] = content["content"]
-            if content["fieldid"] == fields["Hintergrundbild"]:
-                imgname = content["content"]
+            if content["fieldid"] == fields["Hintergrund"]:
+                fname = content["content"]
                 for f in content["files"]:
-                    if f["filename"] == imgname: 
+                    if f["filename"] == fname: 
                         slide["background"] = self.mws.download_file(f["filename"], f["fileurl"])
         return slide
     
@@ -46,9 +50,12 @@ class PresentationParser:
                 continue
             
             html += "<section"
-            if "background" in slide.keys():
-                html += " data-background=\""+slide["background"]+"\""
-            if "duration" in slide.keys():
+            if "background" in slide.keys() and slide["background"]:
+                if ("mp4" or "mov") in slide["background"]:
+                    html += " data-background-video=\""+slide["background"]+"\" data-background-size=contain data-background-video-loop"
+                else:
+                    html += " data-background=\""+slide["background"]+"\""
+            if "duration" in slide.keys() and slide["duration"] != None:
                 html += " data-autoslide=\""+str(int(slide["duration"])*1000)+"\""
             
             html += ">"
