@@ -37,6 +37,11 @@
 				// Learn about plugins: https://revealjs.com/plugins/
 				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
 			});
+			Reveal.on('slidechanged', event => {
+				if (Reveal.getProgress() == 0) {
+					window.location.reload;
+				}
+			});
 		</script>
 	</body>
 </html>
