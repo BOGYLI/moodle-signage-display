@@ -51,7 +51,7 @@ class PresentationParser:
             
             html += "<section"
             if "background" in slide.keys() and slide["background"]:
-                if ("mp4" or "mov") in slide["background"]:
+                if any(suffix in slide["background"] for suffix in ["mp4", "mov"]):
                     html += " data-background-video=\""+slide["background"]+"\" data-background-size=contain data-background-video-loop"
                 else:
                     html += " data-background=\""+slide["background"]+"\""
