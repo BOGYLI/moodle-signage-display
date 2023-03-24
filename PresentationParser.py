@@ -43,9 +43,12 @@ class PresentationParser:
     def build_slides_html(self, slides) -> str:
         html = ""
         prio = False
+        
         for slide in slides:
             if slide["priority"] == "ja":
                 prio = True
+                
+        for slide in slides:
             if prio == True and slide["priority"] == "nein":
                 continue
             
