@@ -12,6 +12,22 @@
 
 		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="../reveal.js/plugin/highlight/monokai.css">
+
+		<!-- Some Moodle Atto styles -->
+		<style>
+			.img-fluid.atto_image_button_right {
+				position: relative;
+				float: right;
+			}
+			.img-fluid.atto_image_button_left {
+				position: relative;
+				float: left;
+			}
+			:root {
+				--r-main-font-size: 35px;
+			}
+			
+		</style>
 	</head>
 	<body>
 		<div class="reveal">
@@ -29,6 +45,8 @@
 			// - https://revealjs.com/initialization/
 			// - https://revealjs.com/config/
 			Reveal.initialize({
+				width: 1024,
+				height: 1024*9/16,
 				hash: true,
 				autoSlide: 30000,
 				loop: true,
