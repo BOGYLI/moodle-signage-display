@@ -57,7 +57,7 @@ class PresentationParser:
                 if any(suffix in slide["background"] for suffix in ["mp4", "mov"]):
                     html += " data-background-video=\""+slide["background"]+"\" data-background-size=contain data-background-video-loop"
                 else:
-                    html += " data-background=\""+slide["background"]+"\""
+                    html += " data-background=\""+slide["background"]+"\" data-background-size=contain"
             if "duration" in slide.keys() and slide["duration"] != None:
                 html += " data-autoslide=\""+str(int(slide["duration"])*1000)+"\""
             
