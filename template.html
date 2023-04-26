@@ -57,7 +57,8 @@
 			});
 			Reveal.on('slidechanged', event => {
 				if (Reveal.getProgress() == 0) {
-					window.location.reload;
+					location.replace("http://localhost:8080");
+					console.log("reload");
 				}
 			});
 		</script>
