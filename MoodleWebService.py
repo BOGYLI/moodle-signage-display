@@ -14,12 +14,17 @@ class MoodleWebService:
             "databaseid": dbid
         }
         
-        response = requests.post(self.request_url, params=params)
-        dbfields = response.json()["fields"]
-        fields = dict()
-        for field in dbfields:
-            fields[field["name"]] = field["id"]
-        return fields
+        try:
+            response = requests.post(self.request_url, params=params)
+            response.raise_for_status()
+            dbfields = response.json()["fields"]
+            fields = dict()
+            for field in dbfields:
+                fields[field["name"]] = field["id"]
+            return fields
+        except requests.exceptions.HTTPError as errh:
+            print("HTTP Error")
+            print(errh.args[0])
     
     # Get the list of moodle database entries.
     def request_db_entries(self, dbid) -> list:
@@ -30,12 +35,22 @@ class MoodleWebService:
             "databaseid": dbid,
             "returncontents": 1
         }
-        response = requests.post(self.request_url, params=params)
-        return response.json()["entries"]
+        try:
+            response = requests.post(self.request_url, params=params)
+            response.raise_for_status()
+            return response.json()["entries"]
+        except requests.exceptions.HTTPError as errh:
+            print("HTTP Error")
+            print(errh.args[0])
     
     # Download file form URL and save it in media folder.
     def download_file(self, filename, fileurl) -> str:
-        r = requests.get(fileurl+"?token="+self.authtoken)
-        with open("html/media/"+filename,'wb') as f:
-            f.write(r.content)
-        return "media/"+filename
+        try:
+            r = requests.get(fileurl+"?token="+self.authtoken)
+            r.raise_for_status()
+            with open("html/media/"+filename,'wb') as f:
+                f.write(r.content)
+            return "media/"+filename
+        except requests.exceptions.HTTPError as errh:
+            print("HTTP Error")
+            print(errh.args[0])
