@@ -56,8 +56,8 @@
 				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
 			});
 			Reveal.on('slidechanged', event => {
-				if (Reveal.getProgress() == 0) {
-					location.replace(location.host);
+				if (event.currentSlide == 0) {
+					location.reload();
 					console.log("reload");
 				}
 			});
